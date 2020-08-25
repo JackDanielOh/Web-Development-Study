@@ -49,7 +49,7 @@ class Login extends Component {
 
                                 <div className="form-group">
                                     <input
-                                        type="password"
+                                        type="epassword"
                                         className={'form-control form-control-lg'}
                                         placeholder="Password"
                                         name="password"
