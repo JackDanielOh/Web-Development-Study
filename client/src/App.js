@@ -2,11 +2,13 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
+
 import Navbar from "./component/layout/Navbar";
 import Landing from "./component/layout/Landing";
 import Footer from "./component/layout/Footer";
-import { Provider } from 'react-redux';
-import store from './store';
 
 import Register from "./component/auth/Register";
 import Login from "./component/auth/Login";
