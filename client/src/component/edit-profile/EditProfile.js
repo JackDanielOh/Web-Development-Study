@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { createProfile, getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
@@ -84,7 +84,22 @@ class EditProfile extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-
+        const profileData = {
+            handle: this.state.handle,
+            company: this.state.company,
+            website: this.state.website,
+            location: this.state.location,
+            status: this.state.status,
+            skills: this.state.skills,
+            githubusername: this.state.githubusername,
+            bio: this.state.bio,
+            twitter: this.state.twitter,
+            facebook: this.state.twitter,
+            linkedin: this.state.linkedin,
+            youtube: this.state.youtube,
+            instagram: this.state.instagram
+        };
+        this.props.createProfile(profileData, this.props.history);
     }
 
     render() {
@@ -158,6 +173,9 @@ class EditProfile extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
+                            <Link to="/dashboard" className="btn btn-light">
+                                Go Back
+                            </Link>
                             <h1 className="display-4 text-center">
                                 Edit Profile
                             </h1>
@@ -249,7 +267,7 @@ class EditProfile extends Component {
                                 {socialInputs}
                                 <input
                                     type="submit"
-                                    value="Submit"
+                                    value="submit"
                                     className="btn btn-info btn-block mt-4"
                                 />
                             </form>

@@ -19,7 +19,7 @@ import Login from "./component/auth/Login";
 import Dashboard from "./component/dashboard/Dashboard";
 import CreateProfile from "./component/create-profile/CreateProfile";
 import EditProfile from "./component/edit-profile/EditProfile";
-
+import AddExperience from "./component/add-credentials/AddExperience";
 import './App.css';
 
 // check for token
@@ -50,18 +50,7 @@ class App extends Component {
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/login" component={Login} />
                             <Switch>
-                                <PrivateRoute
-                                    exact
-                                    path="/dashboard"
-                                    component={Dashboard}
-                                />
-                            </Switch>
-                            <Switch>
-                                <PrivateRoute
-                                    exact
-                                    path-="/edit-profile"
-                                    component={EditProfile}
-                                />
+                                <PrivateRoute exact path="/dashboard" component={Dashboard} />
                             </Switch>
                             <Switch>
                                 <PrivateRoute
@@ -70,7 +59,20 @@ class App extends Component {
                                     component={CreateProfile}
                                 />
                             </Switch>
-
+                            <Switch>
+                                <PrivateRoute
+                                    exact
+                                    path="/edit-profile"
+                                    component={EditProfile}
+                                />
+                            </Switch>
+                            <Switch>
+                                <PrivateRoute
+                                    exact
+                                    path="/add-experience"
+                                    component={AddExperience}
+                                />
+                            </Switch>
                         </div>
                         <Footer />
                     </div>
