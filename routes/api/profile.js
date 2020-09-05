@@ -22,7 +22,8 @@ router.get('/', authCheck, (req, res) => {
 
     const errors = {};
 
-    profileModel.findOne({ user: req.user.id })
+    profileModel
+        .findOne({ user: req.user.id })
         .populate('user', ['name', 'avatar'])
         .then(profile => {
             if (!profile) {
@@ -62,7 +63,8 @@ router.get('/all', (req, res) => {
 router.get('/handle/:handle', (req, res) => {
 
     const errors = {};
-    profileModel.findOne({ handle: req.params.handle })
+    profileModel
+        .findOne({ handle: req.params.handle })
         .populate('user', ['name', 'avatar'])
         .then(profile => {
             if (!profile) {
@@ -81,7 +83,8 @@ router.get('/handle/:handle', (req, res) => {
 router.get('/user/:user_id', (req, res) => {
    const errors = {};
 
-   profileModel.findOne({ user: req.params.user_id })
+   profileModel
+       .findOne({ user: req.params.user_id })
        .populate('user', ['name', 'avatar'])
        .then(profile => {
            if (!profile) {
@@ -133,7 +136,8 @@ router.post('/', authCheck, (req, res) => {
     if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
     if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
-    profileModel.findOne({ user: req.user.id })
+    profileModel
+        .findOne({ user: req.user.id })
         .then(profile => {
             if (profile) {
                 // update
@@ -178,7 +182,8 @@ router.get('/experience', authCheck, (req, res) => {
         return res.status(400).json(errors);
     }
 
-    profileModel.findOne({ user: req.user.id })
+    profileModel
+        .findOne({ user: req.user.id })
         .then(profile => {
             const newExp = {
                 title: req.body.title,
@@ -211,7 +216,8 @@ router.post('/education', authCheck, (req, res) => {
         return res.status(400).json(errors);
     }
 
-    Profile.findOne({ user: req.user.id })
+    profileModel
+        .findOne({ user: req.user.id })
         .then(profile => {
             const newEdu = {
                 school: req.body.school,
@@ -239,7 +245,8 @@ router.post('/education', authCheck, (req, res) => {
 // @access  Private
 
 router.delete('/experience/:exp_id', authCheck, (req, res) => {
-   profileModel.findOne({ user: req.user.id })
+   profileModel
+       .findOne({ user: req.user.id })
        .then(profile=> {
 
            //get remove index
@@ -262,7 +269,8 @@ router.delete('/experience/:exp_id', authCheck, (req, res) => {
 // @desc    Delete education from profile
 // @access  Private
 router.delete('/education/:edu_id', authCheck, (req, res) => {
-    profileModel.findOne({ user: req.user.id })
+    profileModel
+        .findOne({ user: req.user.id })
         .then(profile=> {
 
             //get remove index
@@ -284,9 +292,11 @@ router.delete('/education/:edu_id', authCheck, (req, res) => {
 // @desc    Delete user and profile
 // @access  Private
 router.delete('/', authCheck, (req, res) => {
-   profileModel.findByIdAndRemove({ user: req.user.id })
+   profileModel
+       .findOneAndRemove({ user: req.user.id })
        .then(() => {
-           userModel.findOneAndRemove({ _id: req.user.id})
+           userModel
+               .findByIdAndRemove({ _id: req.user.id})
                .then(() => res.json({ success: true }))
                .catch(err => res.status(404).json(err));
        })
