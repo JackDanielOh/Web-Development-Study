@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import errorReducer from "../../reducers/errorReducer";
+import {addExperience} from "../../actions/profileActions";
 
 class AddExperience extends Component {
     constructor(props) {
@@ -22,14 +22,29 @@ class AddExperience extends Component {
         }
 
         this.onChange = this.onChange.bind(this);
-        this.OnSubmit = this.onSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.onCheck = this.onCheck.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors});
+        }
     }
 
     onSubmit(e) {
         e.preventDefault();
 
-        console.log(this.state);
+        const expData = {
+            company: this.state.company,
+            title: this.state.title,
+            location: this.state.location,
+            from: this.state.from,
+            to: this.state.to,
+            current: this.state.current,
+            description: this.state.description
+        };
+        this.props.addExperience(expData, this.props.history)
     }
 
     onChange(e){
@@ -77,11 +92,11 @@ class AddExperience extends Component {
                                 />
                                 <h6>From Date</h6>
                                 <TextFieldGroup
-                                    name="form"
-                                    type={"date"}
+                                    name="from"
+                                    type="date"
                                     value={this.state.from}
                                     onChange={this.onChange}
-                                    error={errors.form}
+                                    error={errors.from}
                                 />
                                 <h6>To Date</h6>
                                 <TextFieldGroup
@@ -132,6 +147,7 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
+    addExperience: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 };
@@ -141,4 +157,6 @@ const mapStateToProps = state => ({
     errors: state.errors
 });
 
-export default connect(mapStateToProps)(withRouter(AddExperience));
+export default connect(mapStateToProps, { addExperience })(
+    withRouter(AddExperience)
+);

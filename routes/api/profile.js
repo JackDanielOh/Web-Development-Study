@@ -173,7 +173,7 @@ router.post('/', authCheck, (req, res) => {
 // @desc    Add experience to profile
 // @access  Private
 
-router.get('/experience', authCheck, (req, res) => {
+router.post('/experience', authCheck, (req, res) => {
 
     const { errors, isValid } = validateExperienceInput(req.body);
 
