@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { getCurrentProfile, deleteAccount } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 import ProfileActions from './ProfileActions';
+import Experience from './Experience'
+import Education from "./Education";
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -27,12 +29,16 @@ class Dashboard extends Component {
         } else {
             // Check if logged in user has profile data
             if (Object.keys(profile).length > 0) {
+                console.log(profile);
                 dashboardContent = (
                     <div>
                         <p className="lead text-muted">
                             Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
                         </p>
+                        <p>{profile.bio}</p>
                         <ProfileActions />
+                        <Education education={profile.education} />
+                        <Experience experience={profile.experience} />
                         <div style={{ marginBottom: '60px' }} />
                         <button
                             onClick={this.onDeleteClick.bind(this)}
