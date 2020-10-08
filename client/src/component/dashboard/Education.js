@@ -2,8 +2,15 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from "react-moment";
+import {deleteEducation } from "../../actions/profileActions";
+import Experience from "./Experience";
 
 class Education extends Component {
+
+    onDeleteClick(id) {
+        this.props.deleteEducation(id);
+    }
+
     render() {
         const education = this.props.education.map(edu => (
             <tr key={edu._id}>
@@ -19,6 +26,7 @@ class Education extends Component {
                 </td>
                 <td>
                     <button
+                        onClick={this.onDeleteClick.bind(this, edu._id)}
                         className="btn btn-danger"
                     >
                         Delete
@@ -45,6 +53,8 @@ class Education extends Component {
     }
 }
 
-Education.propTypes = {};
+Education.propTypes = {
+    deleteEducation: PropTypes.func.isRequired
+};
 
-export default Education;
+export default connect(null, { deleteEducation })(Education);
