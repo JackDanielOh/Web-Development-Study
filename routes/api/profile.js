@@ -196,11 +196,11 @@ router.post('/experience', authCheck, (req, res) => {
             };
 
             // add to exp array
-            profileModel.experience.unshift(newExp);
-            profileModel
+            profile.experience.unshift(newExp);
+            profile
                 .save()
                 .then(profile => res.json(profile))
-                .catch(err => res.status(404).josn(err));
+                .catch(err => res.status(404).json(err));
         })
         .catch(err => res.status(404).json(err));
 });
