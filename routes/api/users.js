@@ -5,7 +5,7 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-
+const normalize = require('normalize-url');
 
 // Load input validation
 
@@ -37,11 +37,20 @@ router.post('/register', (req, res) => {
                 errors.email = 'Email already exists';
                 return res.status(400).json(errors);
             } else {
-                const avatar = gravatar.url(req.body.email, {
-                    s: '200', // size
-                    r: 'pg',  // Rating
-                    d: 'mm'   // Default
-                });
+
+                const avatar = normalize(
+                    gravatar.url(req.body.email, {
+                        s: '200', // size
+                        r: 'pg',  // Rating
+                        d: 'mm'   // Default
+                    }),
+                    { forceHttps: true }
+                )
+                // const avatar = gravatar.url(req.body.email, {
+                //     s: '200', // size
+                //     r: 'pg',  // Rating
+                //     d: 'mm'   // Default
+                // });
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
